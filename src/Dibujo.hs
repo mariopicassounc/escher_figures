@@ -1,4 +1,5 @@
 {-# LANGUAGE LambdaCase #-}
+
 module Dibujo (
     Dibujo,
     figura, rotar, espejar, rot45, apilar, juntar, encimar,
@@ -7,57 +8,72 @@ module Dibujo (
     cuarteto, encimar4, ciclar,
     foldDib, mapDib,
     figuras
-) where
-
-
-{-
-Gramática de las figuras:
-<Fig> ::= Figura <Bas> | Rotar <Fig> | Espejar <Fig> | Rot45 <Fig>
-    | Apilar <Float> <Float> <Fig> <Fig> 
-    | Juntar <Float> <Float> <Fig> <Fig> 
-    | Encimar <Fig> <Fig>
--}
-
-
-data Dibujo a = Borrar -- Completar
+    ) 
+where
+    
+data Dibujo a = Figura a
+    | Rotar (Dibujo a) 
+    | Espejar (Dibujo a) 
+    | Rot45 (Dibujo a)
+    | Apilar Float Float (Dibujo a) (Dibujo a) 
+    | Juntar Float Float (Dibujo a) (Dibujo a) 
+    | Encimar (Dibujo a) (Dibujo a)     
     deriving (Eq, Show)
 
 -- Agreguen los tipos y definan estas funciones
 
+-- Composicion n-veces de una funcion con si misma
+comp :: (a -> a) -> Int -> a -> a
+comp f n d
+    |n <= 0 = d
+    |n > 0 = comp f (n-1) $ f d
+
 -- Construcción de dibujo. Abstraen los constructores.
+  
+figura :: a -> Dibujo a 
+figura d =  Figura d
 
-figura = undefined
+rotar :: Dibujo a -> Dibujo a
+rotar d = Rotar d
 
-rotar = undefined
+espejar :: Dibujo a -> Dibujo a
+espejar d = Espejar d
 
-espejar = undefined
+rot45 :: Dibujo a -> Dibujo a 
+rot45 d = Rot45 d 
 
-rot45 = undefined
+apilar :: Float -> Float -> Dibujo a -> Dibujo a -> Dibujo a 
+apilar x y d1 d2 = Apilar x y d1 d2
 
-apilar = undefined
+juntar :: Float -> Float -> Dibujo a -> Dibujo a -> Dibujo a 
+juntar x y d1 d2 = Juntar x y d1 d2 
 
-juntar = undefined
-
-encimar = undefined
+encimar :: Dibujo a -> Dibujo a -> Dibujo a
+encimar d1 d2 = Encimar d1 d2
 
 
 -- Rotaciones de múltiplos de 90.
-r180 = undefined
+r180 :: Dibujo a -> Dibujo a
+r180 d = comp Rotar 2 d
 
 r270 :: Dibujo a -> Dibujo a
-r270 = undefined
+r270 d = comp Rotar 3 d
 
 -- Pone una figura sobre la otra, ambas ocupan el mismo espacio.
-(.-.) = undefined
+(.-.):: Dibujo a -> Dibujo a -> Dibujo a 
+(.-.) d1 d2 = Apilar 1 1 d1 d2 
 
 -- Pone una figura al lado de la otra, ambas ocupan el mismo espacio.
-(///) = undefined
+(///) :: Dibujo a -> Dibujo a -> Dibujo a
+(///) d1 d2 = Juntar 1 1 d1 d2
 
 -- Superpone una figura con otra.
-(^^^) = undefined
+(^^^) :: Dibujo a -> Dibujo a -> Dibujo a 
+(^^^) d1 d2 = Juntar 1 1 d1 d2
 
 -- Dadas cuatro figuras las ubica en los cuatro cuadrantes.
-cuarteto = undefined
+cuarteto :: Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a 
+cuarteto d1 d2 d3 d4 = (d1 /// d2) .-. (d3 /// d4)
 
 -- Una figura repetida con las cuatro rotaciones, superpuestas.
 encimar4 = undefined
