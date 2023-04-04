@@ -1,6 +1,6 @@
 module Pred (
   Pred,
-  cambiar, orP, andP
+  cambiar, orP, andP, anyFig
 ) where
 
 import Dibujo (
@@ -34,6 +34,28 @@ cambiar p f d = foldDib
     (\x y z w -> apilar x y z w) 
     (\x y z w -> juntar x y z w) 
     (\x y -> encimar x y) d
+
+-- Alguna figura satisface el predicado.
+anyFig :: Pred a -> Dibujo a -> Bool
+anyFig p d = foldDib 
+    (\x -> p x) 
+    (id) 
+    (id) 
+    (id) 
+    (\x y z w -> z || w) 
+    (\x y z w -> z || w) 
+    (\x y -> x || y) d
+
+-- Todas las figuras satisfacen el predicado.
+allFig :: Pred a -> Dibujo a -> Bool
+allFig p d = foldDib 
+    (\x -> p x) 
+    (id) 
+    (id) 
+    (id) 
+    (\x y z w -> z && w) 
+    (\x y z w -> z && w) 
+    (\x y -> x && y) d
 
 -- Los dos predicados se cumplen para el elemento recibido.
 andP :: Pred a -> Pred a -> Pred a
