@@ -77,11 +77,13 @@ cuarteto d1 d2 d3 d4 = (d1 /// d2) .-. (d3 /// d4)
 
 -- Una figura repetida con las cuatro rotaciones, superpuestas.
 encimar4 :: Dibujo a -> Dibujo a
-encimar4 d = ((d ^^^ (rot45 d))^^^((r180 d)^^^(r270 d)))
+encimar4 d = d ^^^ rot45 d ^^^ r180 d ^^^ r270 d
 
 -- Cuadrado con la misma figura rotada i * 90, para i ∈ {0, ..., 3}.
 -- No confundir con encimar4!
-ciclar = undefined
+ciclar :: Dibujo a -> Dibujo a
+ciclar d = cuarteto d (rotar d) (r180 d) (r270 d)
+
 
 -- Estructura general para la semántica (a no asustarse). Ayuda: 
 -- pensar en foldr y las definiciones de Floatro a la lógica
