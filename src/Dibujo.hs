@@ -12,12 +12,12 @@ module Dibujo (
 where
     
 data Dibujo a = Figura a
-    | Rotar (Dibujo a) 
-    | Espejar (Dibujo a) 
+    | Rotar (Dibujo a)
+    | Espejar (Dibujo a)
     | Rot45 (Dibujo a)
-    | Apilar Float Float (Dibujo a) (Dibujo a) 
-    | Juntar Float Float (Dibujo a) (Dibujo a) 
-    | Encimar (Dibujo a) (Dibujo a)     
+    | Apilar Float Float (Dibujo a) (Dibujo a)
+    | Juntar Float Float (Dibujo a) (Dibujo a)
+    | Encimar (Dibujo a) (Dibujo a)
     deriving (Eq, Show)
 
 -- Agreguen los tipos y definan estas funciones
@@ -31,45 +31,45 @@ comp f n d
 -- Construcción de dibujo. Abstraen los constructores.
   
 figura :: a -> Dibujo a 
-figura d =  Figura d
+figura = Figura
 
 rotar :: Dibujo a -> Dibujo a
-rotar d = Rotar d
+rotar = Rotar
 
 espejar :: Dibujo a -> Dibujo a
-espejar d = Espejar d
+espejar = Espejar
 
 rot45 :: Dibujo a -> Dibujo a 
-rot45 d = Rot45 d 
+rot45 = Rot45
 
 apilar :: Float -> Float -> Dibujo a -> Dibujo a -> Dibujo a 
-apilar x y d1 d2 = Apilar x y d1 d2
+apilar = Apilar
 
 juntar :: Float -> Float -> Dibujo a -> Dibujo a -> Dibujo a 
-juntar x y d1 d2 = Juntar x y d1 d2 
+juntar = Juntar
 
 encimar :: Dibujo a -> Dibujo a -> Dibujo a
-encimar d1 d2 = Encimar d1 d2
+encimar = Encimar
 
 
 -- Rotaciones de múltiplos de 90.
 r180 :: Dibujo a -> Dibujo a
-r180 d = comp Rotar 2 d
+r180 = comp Rotar 2
 
 r270 :: Dibujo a -> Dibujo a
-r270 d = comp Rotar 3 d
+r270 = comp Rotar 3
 
 -- Pone una figura sobre la otra, ambas ocupan el mismo espacio.
 (.-.):: Dibujo a -> Dibujo a -> Dibujo a 
-(.-.) d1 d2 = Apilar 1 1 d1 d2 
+(.-.)= Apilar 1 1
 
 -- Pone una figura al lado de la otra, ambas ocupan el mismo espacio.
 (///) :: Dibujo a -> Dibujo a -> Dibujo a
-(///) d1 d2 = Juntar 1 1 d1 d2
+(///) = Juntar 1 1
 
 -- Superpone una figura con otra.
 (^^^) :: Dibujo a -> Dibujo a -> Dibujo a 
-(^^^) d1 d2 = Juntar 1 1 d1 d2
+(^^^) = Juntar 1 1
 
 -- Dadas cuatro figuras las ubica en los cuatro cuadrantes.
 cuarteto :: Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a 
