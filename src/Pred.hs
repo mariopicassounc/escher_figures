@@ -1,6 +1,6 @@
 module Pred (
   Pred,
-  cambiar, orP, andP, anyFig
+  cambiar, orP, andP, anyFig, allFig
 ) where
 
 import Dibujo (
