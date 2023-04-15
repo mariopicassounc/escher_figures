@@ -8,10 +8,11 @@ import Text.Read (readMaybe)
 import Interp (Conf(name), initial)
 import Dibujos.Ejemplo (ejemploConf)
 import Dibujos.Feo (feoConf)
+import Dibujos.Grilla (grillaConf)
 
 -- Lista de configuraciones de los dibujos
 configs :: [Conf]
-configs = [ejemploConf, feoConf]
+configs = [ejemploConf, feoConf, grillaConf]
 
 -- Dibuja el dibujo n
 initial' :: [Conf] -> String -> IO ()
