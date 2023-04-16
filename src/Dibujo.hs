@@ -69,7 +69,7 @@ r270 = comp Rotar 3
 
 -- Superpone una figura con otra.
 (^^^) :: Dibujo a -> Dibujo a -> Dibujo a 
-(^^^) = Juntar 1 1
+(^^^) = Encimar
 
 -- Dadas cuatro figuras las ubica en los cuatro cuadrantes.
 cuarteto :: Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a -> Dibujo a 
@@ -77,7 +77,7 @@ cuarteto d1 d2 d3 d4 = (d1 /// d2) .-. (d3 /// d4)
 
 -- Una figura repetida con las cuatro rotaciones, superpuestas.
 encimar4 :: Dibujo a -> Dibujo a
-encimar4 d = d ^^^ rot45 d ^^^ r180 d ^^^ r270 d
+encimar4 d = (^^^) d ((^^^) ((^^^) (rotar d) (r180 d)) (r270 d))
 
 -- Cuadrado con la misma figura rotada i * 90, para i ∈ {0, ..., 3}.
 -- No confundir con encimar4!

@@ -9,13 +9,12 @@ import Interp (Conf(name), initial)
 import Dibujos.Ejemplo (ejemploConf)
 import Dibujos.Feo (feoConf)
 import Dibujos.Grilla (grillaConf)
--- import Dibujos.Escher (escherConf)
+import Dibujos.Escher (escherConf)
 
 -- Lista de configuraciones de los dibujos
 configs :: [Conf]
 
--- Falta agregar escherConf
-configs = [ejemploConf, feoConf, grillaConf]
+configs = [ejemploConf, feoConf, grillaConf, escherConf]
 
 -- Dibuja el dibujo n
 initial' :: [Conf] -> String -> IO ()
